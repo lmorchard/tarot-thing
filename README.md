@@ -2,7 +2,16 @@
 
 This is a web thing that does stuff with a Tarot deck.
 
-## tarot-json
+## Building
+
+```
+npm install
+npm build
+```
+
+## Colophon
+
+### tarot-json
 
 The source of Tarot cards for this thing came from this data set authored by Daria Chemkaeva:
 

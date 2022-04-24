@@ -13,17 +13,23 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@master
 
-      - name: Cache ♻
-        uses: egordm/gha-yarn-node-cache@v1
+      - name: Setup Node.js 🔧
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
 
-      - name: Setup wasm-pack 📦✨
-        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - name: Cache dependencies ♻
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
 
-      - name: Install 🔧
-        run: yarn install
+      - name: Install dependencies 🔧
+        run: npm ci --ignore-scripts
 
       - name: Build 🏗️
-        run: yarn build
+        run: npm run build
 
       - name: Deploy to GH Pages 🚀
         uses: peaceiris/actions-gh-pages@v3
