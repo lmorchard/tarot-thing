@@ -1,0 +1,18 @@
+{
+  "name": "tarot-thing",
+  "version": "1.0.0",
+  "description": "This is a web thing that does stuff with a Tarot deck.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "snowpack": "^3.8.8"
+  }
+}
