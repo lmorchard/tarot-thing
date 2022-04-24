@@ -105,10 +105,12 @@ customElements.define(
           <div class="img"><img src="" /></div>
           <p class="keywords"></p>
           <dl>
-            <dt>Questions to Ask</dt>
-            <dd class="questions"><ul></ul></dd>
             <dt>Meanings</dt>
             <dd class="meanings"><ul></ul></dd>
+            <dt>Fortune Telling</dt>
+            <dd class="fortuneTelling"><ul></ul></dd>
+            <dt>Questions to Ask</dt>
+            <dd class="questions"><ul></ul></dd>
           </dl>
         </div>
       </template>
@@ -121,6 +123,7 @@ customElements.define(
         img,
         inverted = false,
         keywords,
+        fortune_telling: fortuneTelling,
         meanings: { light: meaningsLight, shadow: meaningsShadow },
         "Questions to Ask": questions,
       },
@@ -134,6 +137,11 @@ customElements.define(
         ".keywords": {
           children: keywords.map((keyword) =>
             createElement("keyword-capsule", { props: { keyword } })
+          ),
+        },
+        ".fortuneTelling ul": {
+          children: fortuneTelling.map((item) =>
+            createElement("li", { textContent: item })
           ),
         },
         ".questions ul": {
