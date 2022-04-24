@@ -1,5 +1,6 @@
+import "./lib/components.js";
+
 async function main() {
-  console.log("main")
 }
 
 document.addEventListener("DOMContentLoaded", () =>

@@ -36,7 +36,8 @@ export function updateElement(el, changeSet) {
       const value = changeSet[name];
       if (name.startsWith("@")) {
         el.setAttribute(name.substring(1), value);
-      } if (name === "children") {
+      }
+      if (name === "children") {
         replaceChildren(el, value);
       } else {
         el[name] = value;
@@ -90,6 +91,19 @@ export class BaseElement extends HTMLElement {
   }
 
   propsChanged(newProps, oldProps) {}
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    let handler;
+    if ("attributeHandlers" in this) {
+      handler = this.attributeHandlers[name];
+    }
+    if (!handler) {
+      handler = this[`attributeChanged_${name}`];
+    }
+    if (typeof handler === "function") {
+      return handler.call(this, oldValue, newValue);
+    }
+  }
 
   $(sel) {
     return $(sel, this.shadowRoot);
