@@ -1,4 +1,4 @@
-import "./lib/components.js";
+import "./lib/components/index.js";
 
 async function main() {
 }
