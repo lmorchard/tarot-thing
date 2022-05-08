@@ -4,7 +4,7 @@ import "./tarot-card.js";
 export class TarotCardSetElement extends LitElement {
   static properties = {
     base: {},
-    cards: { type: Array },
+    cards: { type: Object },
   };
 
   static styles = css`
@@ -22,13 +22,13 @@ export class TarotCardSetElement extends LitElement {
   constructor() {
     super();
     this.base = "";
-    this.cards = [];
+    this.cards = null;
   }
 
   render() {
     return html`
       <div class="cards">
-        ${this.cards.map(
+        ${this.cards && this.cards.map(
           (card) => html`
             <tarot-card
               base=${this.base}

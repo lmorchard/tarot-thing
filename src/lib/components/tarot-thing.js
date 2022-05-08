@@ -1,12 +1,12 @@
 import { LitElement, css, html } from "lit";
-import { TarotCardsModel } from "../models.js";
+import { TarotCardsModel, TarotCardSet } from "../models.js";
 import "./tarot-card-set.js";
 
 export class TarotThingElement extends LitElement {
   static properties = {
     base: {},
     model: { type: Object, attribute: false },
-    cards: { type: Array },
+    cards: { type: Object },
   };
 
   static styles = css``;
@@ -16,7 +16,19 @@ export class TarotThingElement extends LitElement {
       const model = new TarotCardsModel({ base: this.base });
       await model.fetch();
       this.model = model;
+      this.updateCards();
+    }
+  }
+
+  updateCards() {
+    const params = new URLSearchParams(location.search);
+    if (params.getAll("card").length === 0) {
+      console.debug("Drawing random cards");
       this.cards = this.model.drawRandomCards(3);
+      location.search = this.cards.toParams();
+    } else {
+      console.debug("Using cards from parameters");
+      this.cards = TarotCardSet.fromParams(this.model, location.search);
     }
   }
 

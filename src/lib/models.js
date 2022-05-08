@@ -31,6 +31,39 @@ export class TarotCardsModel {
       } while (cards.find((inList) => card.name === inList.name));
       cards.push(card);
     }
-    return cards;
+    return new TarotCardSet(cards);
+  }
+
+  findCardByName(name) {
+    return this.cards.find(card => card.name.toLowerCase() === name.toLowerCase());
+  }
+}
+
+export class TarotCardSet {
+  constructor(cards) {
+    this.cards = cards;
+  }
+
+  map(fn) {
+    return this.cards.map(fn);
+  }
+
+  toParams() {
+    const params = new URLSearchParams();
+    params.delete("card");
+    for (const card of this.cards) {
+      params.append("card", card.name);
+    }
+    return params.toString();
+  }
+
+  static fromParams(model, paramsString) {
+    const params = new URLSearchParams(paramsString);
+    const cards = [];
+    for (const name of params.getAll("card")) {
+      const card = model.findCardByName(name);
+      if (card) cards.push(card);
+    }
+    return new TarotCardSet(cards);
   }
 }
