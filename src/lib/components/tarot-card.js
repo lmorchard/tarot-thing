@@ -1,21 +1,16 @@
 import { LitElement, css, html } from "lit";
+import { classMap } from "lit-html/directives/class-map.js";
 import "./keyword-capsule.js";
 
 export class TarotCardElement extends LitElement {
   static properties = {
     base: {},
-    name: {},
-    img: {},
-    inverted: { type: Boolean },
-    keywords: { type: Array },
-    meanings: { type: Array },
-    fortuneTelling: { type: Array },
-    questions: { type: Array },
+    card: { type: Object },
   };
 
   static styles = css`
     :host {
-      padding: 0.5em 1.0em;
+      padding: 0.5em 1em;
       margin: 0.5em;
       flex: 1;
       text-align: center;
@@ -36,35 +31,53 @@ export class TarotCardElement extends LitElement {
   `;
 
   render() {
+    const {
+      base,
+      // TODO: better to pass the whole tarot card object? or just individual properties?
+      card: {
+        name,
+        inverted,
+        img,
+        keywords,
+        fortune_telling: fortuneTelling,
+        "Questions to Ask": questions,
+        meanings: { shadow: meaningsShadow, light: meaningsLight },
+      },
+    } = this;
+
+    const meanings = inverted ? meaningsShadow : meaningsLight;
+
     return html`
-      <h2 class="name">${this.name}${this.inverted ? " (inverted)" : ""}</h2>
-      <div class="img"><img src="${this.base}/cards/${this.img}" /></div>
-      <p class="keywords">
-        ${this.keywords.map(
-          (keyword) =>
-            html`<keyword-capsule keyword=${keyword}></keyword-capsule>`
-        )}
-      </p>
-      <dl>
-        <dt>Meanings</dt>
-        <dd class="meanings">
-          <ul>
-            ${this.meanings.map((item) => html`<li>${item}</li>`)}
-          </ul>
-        </dd>
-        <dt>Fortune Telling</dt>
-        <dd class="fortuneTelling">
-          <ul>
-            ${this.fortuneTelling.map((item) => html`<li>${item}</li>`)}
-          </ul>
-        </dd>
-        <dt>Questions to Ask</dt>
-        <dd class="questions">
-          <ul>
-            ${this.questions.map((item) => html`<li>${item}</li>`)}
-          </ul>
-        </dd>
-      </dl>
+      <div class=${classMap({ inverted })}>
+        <h2 class="name">${name}${inverted ? " (inverted)" : ""}</h2>
+        <div class="img"><img src="${base}/cards/${img}" /></div>
+        <p class="keywords">
+          ${keywords.map(
+            (keyword) =>
+              html`<keyword-capsule keyword=${keyword}></keyword-capsule>`
+          )}
+        </p>
+        <dl>
+          <dt>Meanings</dt>
+          <dd class="meanings">
+            <ul>
+              ${meanings.map((item) => html`<li>${item}</li>`)}
+            </ul>
+          </dd>
+          <dt>Fortune Telling</dt>
+          <dd class="fortuneTelling">
+            <ul>
+              ${fortuneTelling.map((item) => html`<li>${item}</li>`)}
+            </ul>
+          </dd>
+          <dt>Questions to Ask</dt>
+          <dd class="questions">
+            <ul>
+              ${questions.map((item) => html`<li>${item}</li>`)}
+            </ul>
+          </dd>
+        </dl>
+      </div>
     `;
   }
 }
