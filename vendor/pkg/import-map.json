@@ -1,5 +1,6 @@
 {
   "imports": {
-    "lit": "./lit.js"
+    "lit": "./lit.js",
+    "lit-html/directives/class-map.js": "./lit-html/directives/class-map.js"
   }
 }
