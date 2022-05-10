@@ -11,10 +11,8 @@ export class TarotCardElement extends LitElement {
   static styles = css`
     :host {
       padding: 0.5em 1em;
-      margin: 0.5em;
       flex: 1;
       text-align: center;
-      border: 1px solid rgba(0, 0, 0, 0.25);
     }
     .card {
       display: flex;
