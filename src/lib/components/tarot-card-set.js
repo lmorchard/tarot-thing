@@ -14,8 +14,13 @@ export class TarotCardSetElement extends LitElement {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: stretch;
       align-content: stretch;
+    }
+    @media (max-width: 1275px) {
+      .cards {
+        flex-direction: column;
+      }
     }
   `;
 
