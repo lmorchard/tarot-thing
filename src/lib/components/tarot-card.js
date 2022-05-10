@@ -37,6 +37,11 @@ export class TarotCardElement extends LitElement {
       margin: 0 0 1rem 0;
     }
     @media (max-width: 1275px) {
+      :host {
+        padding: 0;
+        flex: 1;
+        text-align: center;
+      }
       .card {
         flex-direction: row;
       }
